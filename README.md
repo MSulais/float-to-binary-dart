@@ -1,4 +1,4 @@
-# Float - Binary
+# Floating Point Number - Binary
 
 ### Float64 (Double)
 
