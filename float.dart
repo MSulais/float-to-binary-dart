@@ -169,7 +169,7 @@ String floatToBinary(String input, int bit){
 
   return input;
   // NOTES: 
-  //   Sometimes, last 1-8 bits in the final result lose some bit precision.
+  //   Sometimes, the last 1-8 bits in the final result lose some bit precision.
   //   Even if it only changes the precision a little to the actual number (base10), 
   //   it's still wrong. I'm still looking for a way to get the correct result.
 }
