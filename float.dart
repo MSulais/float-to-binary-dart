@@ -1,17 +1,25 @@
 
-// ## FLOAT NUMBER ##
-// 
+// ## FLOATING POINT NUMBER ##
+
 // 32-bit floating point number 
-// 0 00101100 00101001110001101000100 (example)
+// 0    00101100 00101001110001101000100 (example)
+// sign exponent -------mantissa--------
+//
 // sign     = ( 1 bit ) 0
 // exponent = ( 8 bits) 00101100
 // mantissa = (23 bits) 00101001110001101000100
-//
+// 
+// info: https://en.wikipedia.org/wiki/Single-precision_floating-point_format
+
 // 64-bit floating point number 
-// 0 00101100001 0100111000110100010000010110000101001110001101000100 (example)
+// 0    00101100001 0100111000110100010000010110000101001110001101000100 (example)
+// sign -exponent-- ----------------------mantissa----------------------
+// 
 // sign     = ( 1 bit ) 0
 // exponent = (11 bits) 00101100001
 // mantissa = (52 bits) 0100111000110100010000010110000101001110001101000100
+// 
+// info: https://en.wikipedia.org/wiki/Double-precision_floating-point_format
 
 import 'dart:math' as math;
 import 'e_notation.dart';
@@ -69,22 +77,21 @@ String floatToBinary(String input, int bit){
   String exponent = '';
   String mantissa = '';
     
-    // example: [ input=12.3 ] => [ decimal=12 float=0.3 ] 
-  String decimal = BigInt.parse(input.substring(0, input.indexOf('.'))).toRadixString(2);
-  String float   = '0' + input.substring(input.indexOf('.'));
+  // example: [ input="12.3" ] => [ number="12" decimal="0.3" ] 
+  String number  = BigInt.parse(input.substring(0, input.indexOf('.'))).toRadixString(2);
+  String decimal = '0' + input.substring(input.indexOf('.'));
 
   int n = 0; 
   int cache = 0;
- 	
- 	
- 	// convert [ float ] from real number to binary 
+   
+   // convert [ float ] from real number to binary 
   while (n <= 150){
-    carry = (double.parse(float) * 2).toString();
+    carry = (double.parse(decimal) * 2).toString();
     carry = convertENotation(carry);
 
     if (carry == '0') carry += '.0';
 
-    float = '0' + carry.substring(carry.indexOf('.'));
+    decimal = '0' + carry.substring(carry.indexOf('.'));
     mantissa += carry.substring(0, 1);
 
     if (mantissa.contains('1')) {
@@ -96,14 +103,14 @@ String floatToBinary(String input, int bit){
     if (cache == 2000) break; // maximum loop times
   }
 
-	// combine all together
-  mantissa = decimal + '.' + mantissa;
+  // combine all together
+  mantissa = number + '.' + mantissa;
 
   int indexDot = mantissa.indexOf('.');
   int indexOne = mantissa.indexOf('1');
   int substractForExp = indexDot < indexOne
-      ? indexDot - indexOne 
-      : indexDot - (indexOne +1)
+    ? indexDot - indexOne 
+    : indexDot - (indexOne +1)
   ;
 
   bool more = false;
@@ -124,7 +131,7 @@ String floatToBinary(String input, int bit){
     exponent = '0';
   }
 
-	// example: [ exponent=101 ] => [ exponent=00000101(32-bits) exponent=00000000101(64-bits) ]
+  // example: [ exponent="101" ] => [ exponent="00000101"(32-bits) exponent="00000000101"(64-bits) ]
   if (exponent.length < (bit == 32? 8 : 11)) {
     exponent = ('0' * ((bit == 32? 8 : 11) - exponent.length)) + exponent;
   }
@@ -144,14 +151,14 @@ String floatToBinary(String input, int bit){
     else if (indexDot > indexOne) {
       if (more) {
         mantissa = mantissa.substring(
-        	mantissa.indexOf('.')  - (bit == 32? 127 : 1023), 
-        	mantissa.indexOf('.')+1
-       	);
+          mantissa.indexOf('.')  - (bit == 32? 127 : 1023), 
+          mantissa.indexOf('.')+1
+        );
       } else {
         mantissa = mantissa.substring(
-        		mantissa.indexOf('1')+1, 
-        		mantissa.indexOf('.')
-        	) 
+            mantissa.indexOf('1')+1, 
+            mantissa.indexOf('.')
+          ) 
           + mantissa.substring(mantissa.indexOf('.')+1);
       }
     }
@@ -161,4 +168,8 @@ String floatToBinary(String input, int bit){
   input = input.substring(0, bit == 32? 32 : 64);
 
   return input;
+  // NOTES: 
+  //   Sometimes, last 1-8 bits in the final result lose some bit precision.
+  //   Even if it only changes the precision a little to the actual number (base10), 
+  //   it's still wrong. I'm still looking for a way to get the correct result.
 }
