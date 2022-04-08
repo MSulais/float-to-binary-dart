@@ -131,7 +131,7 @@ String floatToBinary(String input, int bit){
     exponent = '0';
   }
 
-  // example: [ exponent="101" ] => [ exponent="00000101"(32-bits) exponent="00000000101"(64-bits) ]
+  // example: [ exponent="101" ] => [ exponent="00000101"(Float32) exponent="00000000101"(Float64) ]
   if (exponent.length < (bit == 32? 8 : 11)) {
     exponent = ('0' * ((bit == 32? 8 : 11) - exponent.length)) + exponent;
   }
