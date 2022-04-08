@@ -39,7 +39,7 @@ String binaryToFloat(String input, int bit){
   String mantissa = input.substring(bit == 32? 9 : 12);
 
   // convert mantissa from bits to real numbers
-  for (int i = 1; i <= mantissa.length; i++) { if (mantissa.substring(i-1, i) == '1') {
+  for (int i = 1; i <= mantissa.length; i++) { if (mantissa.substring(i - 1, i) == '1') {
     carry = (double.parse(carry) + math.pow(2, -i)).toString();
   } }
 
@@ -144,22 +144,22 @@ String floatToBinary(String input, int bit){
       if (less) {
         mantissa = mantissa.substring(mantissa.indexOf('.') + (bit == 32? 127 : 1023));
       } else {
-        mantissa = mantissa.substring(mantissa.indexOf('1')+1);
+        mantissa = mantissa.substring(mantissa.indexOf('1') + 1);
       }
     }
 
     else if (indexDot > indexOne) {
       if (more) {
         mantissa = mantissa.substring(
-          mantissa.indexOf('.')  - (bit == 32? 127 : 1023), 
-          mantissa.indexOf('.')+1
+          mantissa.indexOf('.') - (bit == 32? 127 : 1023), 
+          mantissa.indexOf('.') + 1
         );
       } else {
         mantissa = mantissa.substring(
-            mantissa.indexOf('1')+1, 
+            mantissa.indexOf('1') + 1, 
             mantissa.indexOf('.')
           ) 
-          + mantissa.substring(mantissa.indexOf('.')+1);
+          + mantissa.substring(mantissa.indexOf('.') + 1);
       }
     }
   }
