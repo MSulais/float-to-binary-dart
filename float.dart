@@ -164,10 +164,10 @@ String floatToBinary(String input, int bit){
     }
   }
 
-  input = sign + exponent + mantissa;
-  input = input.substring(0, bit == 32? 32 : 64);
+  String output = sign + exponent + mantissa;
+  output = output.substring(0, bit == 32? 32 : 64);
 
-  return input;
+  return output;
   // NOTES: 
   //   Sometimes, the last 1-8 bits in the final result lose some bit precision.
   //   Even if it only changes the precision a little to the actual number (base10), 
