@@ -40,4 +40,4 @@ Mantissa = (23 bits) ***00101001110001101000100***
 | Positive | 3.4028234664 × 10 ^ 38   | 1.4012984643 × 10 ^ −45 |
 | Negative | −1.4012984643 × 10 ^ −45 | −3.4028234664 × 10 ^ 38 |
 
-[More info Float32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format)
+[More info about Float32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format)
