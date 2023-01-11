@@ -138,6 +138,7 @@ String floatToBinary(String input, int bit){
 
   if (indexOne == -1) {
     mantissa = mantissa.substring(mantissa.indexOf('.') + 1);
+    
   } else {
 
     if (indexDot < indexOne) {
@@ -150,15 +151,10 @@ String floatToBinary(String input, int bit){
 
     else if (indexDot > indexOne) {
       if (more) {
-        mantissa = mantissa.substring(
-          mantissa.indexOf('.') - (bit == 32? 127 : 1023), 
-          mantissa.indexOf('.') + 1
-        );
+        mantissa = mantissa.substring(mantissa.indexOf('.') - (bit == 32? 127 : 1023), mantissa.indexOf('.') + 1);
       } else {
-        mantissa = mantissa.substring(
-            mantissa.indexOf('1') + 1, 
-            mantissa.indexOf('.')
-          ) 
+        mantissa = 
+          mantissa.substring(mantissa.indexOf('1') + 1, mantissa.indexOf('.')) 
           + mantissa.substring(mantissa.indexOf('.') + 1);
       }
     }
